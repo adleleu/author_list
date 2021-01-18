@@ -1,30 +1,20 @@
 # created on the 10th of October 2020 by Adrien Leleu
-# updated on the 18th of January 2020 by Adrien Leleu 
 
 import numpy as np
 import pandas as pd
 import csv
 
 # create a single dataframe from all the spreadsheets
-df_list1 = pd.read_csv('CHEOPS_authors - CHEOPS_all_papers.csv')
-df_list2 = pd.read_csv('CHEOPS_authors - CHEOPS_selected_papers.csv')
+df_list1 = pd.read_csv('CHEOPS_authors - ST_CHEOPS_s.csv')
+df_list2 = pd.read_csv('ESPRESSO-ST - ST_ESPRESSO_s.csv')
+df_list3 = pd.read_csv('ESPRESSO_Nathan - ESPRESSO_Nathan_proposal.csv')
+df_list4 = pd.read_csv('NGTS - Sheet1.csv')
+df_list5 = pd.read_csv('SPECULOOS - Sheet1.csv')
 
-
-# list of people from the CHEOPS_selected_papers.csv
-selected_list=['A. Bonfanti',
-                'A. Leleu',
-                'C.M. Persson',
-                'D. Futyan',
-                'G. Bou{\'e}', 
-                'N. C. Hara', 
-                'M. J. Hooton',
-                'T. G. Wilson',
-                'J.-B. Delisle']
-
-
-#cret the list of all authors of the paper
-df_selected=df_list2[df_list2['author'].isin(selected_list)]
-df_list=df_list1.append(df_selected)
+df_list=df_list1.append(df_list2)
+df_list=df_list.append(df_list3)
+df_list=df_list.append(df_list4)
+df_list=df_list.append(df_list5)
 
 
 all_authors=df_list.author.tolist()
@@ -40,8 +30,8 @@ Id_sort=sorted(range(len(Family_names)), key=lambda k: Family_names[k])
 all_authors_sorted=[all_authors[i] for i in Id_sort]
 
 # write here the authors in the non-alphabetical list, using exactly the same name as in the spreadsheet
-authors_nonalpha=['A. Leleu', 'Y. Alibert', 'N. C. Hara', 'M. J. Hooton','T. G. Wilson', 'J.-B. Delisle', 'J. Laskar',
-  'S. Hoyer','J. Cabrera','L. Delrez']
+authors_nonalpha=['A. Leleu\\thanks{CHEOPS Fellow}', 'Y. Alibert', 'N. C. Hara\samethanks', 'M. J. Hooton','T. G. Wilson','P. Robutel', 'J.-B. Delisle', 'J. Laskar',
+  'S. Hoyer', 'C. Lovis', 'E. M. Bryant', 'E. Ducrot','J. Cabrera','L. Delrez']
 
 
 # create the author list
@@ -63,9 +53,9 @@ for author in authors:
     
     
     #institute list
-    author_institutes_list=author_insistutes_f.values.tolist()[0][3:7]
+    author_institutes_list=author_insistutes_f.values.tolist()[0][2:6]
     author_institutes_fnn = [x for x in author_institutes_list if str(x) != 'nan']
-   
+    print('fn',author_institutes_fnn)
     author_institutes=[]
     for institute in author_institutes_fnn:
         # if the institute is already in the list, add its index next to the author name
@@ -78,8 +68,7 @@ for author in authors:
     authors_institutes.append(author_institutes)
     
     #acknowledgments list following the order of the author list
-    author_acknow_list=author_insistutes_f.values.tolist()[0][7:11]
-    
+    author_acknow_list=author_insistutes_f.values.tolist()[0][6:]
     author_acknow_fnn = [x for x in author_acknow_list if str(x) != 'nan'] 
     for acknow in author_acknow_fnn:
         if acknow not in acknowledgements:
@@ -134,5 +123,3 @@ for l,line in zip(range(len(acknowledgements)),acknowledgements):
   outF.write("\n")
 
 outF.close()
-
-
