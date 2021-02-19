@@ -1,28 +1,87 @@
 # created on the 10th of October 2020 by Adrien Leleu
 # updated on the 18th of January 2020 by Adrien Leleu 
+# updated on the 19th of February 2020 by Adrien Leleu 
 
 import numpy as np
 import pandas as pd
 import csv
 
-# create a single dataframe from all the spreadsheets
-df_list1 = pd.read_csv('CHEOPS_authors - CHEOPS_all_papers.csv')
-df_list2 = pd.read_csv('CHEOPS_authors - CHEOPS_selected_papers.csv')
 
+# Download the spreadsheet at : https://docs.google.com/spreadsheets/d/1KFxz20yqZqm2UWk5K46ZB7qjGSqMhIc1SXvdEA0mSjs/edit#gid=6611300
+# Use exactly the same name as in the spreadsheet except triple '\\\' for special character (see example) in significant contributors
+# if any bug occur : adrien.leleu@unige.ch
+
+
+# Lead Author 
+lead_author=['W. Benz']
+
+# 4 Major contributors 
+
+major_contirbutors_list=['T. G. Wilson',
+                         'S. Udry',
+                         'N. C. Hara',
+                         'A. Bonfanti']
+
+
+# 4 Science Enablers 
+science_enablers_list=['A. Deline',
+                       'C. Broeg',
+                       'N. Billot',
+                       'S. G. Sousa']
+                         
+
+
+#significant contributors (max 15%) 
+
+significant_contributors_list=['V. Van Grootel',
+                               'V. Bourrier',
+                               'G. Bou{\\\'e}', # 'G. Bou{\'e}' in the spreadsheet
+                               'A. Leleu',
+                               'A. Lecavelier des Etangs']
+                               
 
 # list of people from the CHEOPS_selected_papers.csv
 selected_list=['A. Bonfanti',
                 'A. Leleu',
                 'C.M. Persson',
                 'D. Futyan',
-                'G. Bou{\'e}', 
+                'G. Bou{\\\'e}', 
                 'N. C. Hara', 
                 'M. J. Hooton',
                 'T. G. Wilson',
                 'J.-B. Delisle']
 
 
-#cret the list of all authors of the paper
+
+########################################################################
+########################################################################
+########################################################################
+
+
+
+
+# Non-alphabetical list
+authors_nonalpha=[lead_author]
+authors_nonalpha.append(major_contirbutors_list)
+authors_nonalpha.append(science_enablers_list)
+authors_nonalpha.append(significant_contributors_list)
+
+
+flatten = lambda l: [item for sublist in l for item in sublist]
+authors_nonalpha=flatten(authors_nonalpha)
+
+
+
+#ensure that all written authors are in the list
+selected_list=[selected_list,authors_nonalpha]
+selected_list=flatten(selected_list)
+
+#load the spreadsheet
+df_list1 = pd.read_csv('CHEOPS_authors - CHEOPS_all_papers.csv')
+df_list2 = pd.read_csv('CHEOPS_authors - CHEOPS_selected_papers.csv')
+
+
+#create the list of all authors of the paper
 df_selected=df_list2[df_list2['author'].isin(selected_list)]
 df_list=df_list1.append(df_selected)
 
@@ -39,9 +98,7 @@ for name in all_authors:
 Id_sort=sorted(range(len(Family_names)), key=lambda k: Family_names[k])
 all_authors_sorted=[all_authors[i] for i in Id_sort]
 
-# write here the authors in the non-alphabetical list, using exactly the same name as in the spreadsheet
-authors_nonalpha=['A. Leleu', 'Y. Alibert', 'N. C. Hara', 'M. J. Hooton','T. G. Wilson', 'J.-B. Delisle', 'J. Laskar',
-  'S. Hoyer','J. Cabrera','L. Delrez']
+
 
 
 # create the author list
@@ -61,32 +118,33 @@ for author in authors:
     
     author_insistutes_f=df_list[df_list['author']==author]
     
-    
-    #institute list
-    author_institutes_list=author_insistutes_f.values.tolist()[0][3:7]
-    author_institutes_fnn = [x for x in author_institutes_list if str(x) != 'nan']
-   
-    author_institutes=[]
-    for institute in author_institutes_fnn:
-        # if the institute is already in the list, add its index next to the author name
-        if institute in institutes: 
-            author_institutes.append(institutes.index(institute))
-        #if not, create a new entry in the institute list
-        else:
-            institutes.append(institute)
-            author_institutes.append(institutes.index(institute))
-    authors_institutes.append(author_institutes)
-    
-    #acknowledgments list following the order of the author list
-    author_acknow_list=author_insistutes_f.values.tolist()[0][7:11]
-    
-    author_acknow_fnn = [x for x in author_acknow_list if str(x) != 'nan'] 
-    for acknow in author_acknow_fnn:
-        if acknow not in acknowledgements:
-            acknowledgements.append(acknow)
-            
-#print(authors_institutes)
-#print(institutes)
+    try :
+        #institute list
+        author_institutes_list=author_insistutes_f.values.tolist()[0][3:7]
+        author_institutes_fnn = [x for x in author_institutes_list if str(x) != 'nan']
+       
+        author_institutes=[]
+        for institute in author_institutes_fnn:
+            # if the institute is already in the list, add its index next to the author name
+            if institute in institutes: 
+                author_institutes.append(institutes.index(institute))
+            #if not, create a new entry in the institute list
+            else:
+                institutes.append(institute)
+                author_institutes.append(institutes.index(institute))
+        authors_institutes.append(author_institutes)
+        
+        #acknowledgments list following the order of the author list
+        author_acknow_list=author_insistutes_f.values.tolist()[0][7:11]
+        
+        author_acknow_fnn = [x for x in author_acknow_list if str(x) != 'nan'] 
+        for acknow in author_acknow_fnn:
+            if acknow not in acknowledgements:
+                acknowledgements.append(acknow)
+                
+    except :
+        print("error with autor : ",author)
+        input("pause")
 
 
 # write the author list, with the institutes indexes, on a column
