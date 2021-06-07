@@ -126,7 +126,7 @@ all_authors=df_selected['Ref name'].tolist()
 # sort all authors from the spreadsheets in alphabetical order, thanks to P. Maxted!
 for ref_name in all_authors:
     name = df_list1[df_list1['Ref name'] == ref_name].Surname.tolist()[0] 
-    Family_names.append(name.split(' ')[-1])
+    Family_names.append(name.split('.')[-1])
 
 nfkd = [unicodedata.normalize('NFKD', s) for s in Family_names] 
 no_diacrit = [s.encode('ASCII', 'ignore') for s in nfkd]
