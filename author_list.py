@@ -2,7 +2,10 @@
 # updated on the 18th of January 2021 by Adrien Leleu 
 # updated on the 19th of February 2021 by Adrien Leleu 
 # updated on the 22nd of May 2021 by Adrien Leleu : now using the csv from the Notion page
-
+# updated on the 2nd of June by C. Broeg: Now allowing for multiple entries in the ID column. 
+#                                         Working with full name instead of surname to allow duplicates of surnames
+#                                         fully in line with publication policy: added ESAPA, EO (ex officio), MA (mission architect)
+#                                         works with MA nominees in Notion table
 
 import numpy as np
 import pandas as pd
@@ -15,40 +18,44 @@ import csv
 
 
 # Lead Author 
-lead_author=['Benz']
+lead_author=['Willy Benz']
 
-# 4 Major contributors 
+# up to 4 Major contributors 
+major_contirbutors_list=['Anders Erikson',
+                         'Sébastien Charnoz',
+                         'Andrea Fortier',
+                         'Tom Wilson']
 
-major_contirbutors_list=['Erikson',
-                         'Bonfanti',
-                         'Ehrenreich',
-                         'Charnoz']
 
-
-# 4 Science Enablers 
-science_enablers_list=['Deline',
-                       'Broeg',
-                       'Billot',
-                       'Sousa']
-                         
-
+# exactly 4 Science Enablers - rotating from the full list of SE
+science_enablers_list=['Attila Simon',
+                       'Christopher Broeg',
+                       'Hans-Gustav Florén',
+                       'Sérgio Sousa'] 
+                       
+science_enablers_list_full=['Mathias Beck','Anja Bekkelien', 'Willy Benz', 'Nicolas Billot', 'Christopher Broeg', 'Andrew Collier Cameron', 
+                            'Adrien Deline', 'David Ehrenreich', 'Hans-Gustav Florén', 
+                            'Andrea Fortier', 'David Futyan', 'Pascal Guterman', 'Sergio Hoyer', 'Pierre Maxted', 'Göran Olofsson', 
+                            'Didier Queloz', 'Attila Simon', 'Sérgio Sousa']
 
 #significant contributors (max 15%) 
-
-significant_contributors_list=['Van Grootel',
-                               'Bourrier',
-                               'Boué', # 'G. Bou{\'e}' in the spreadsheet
-                               'Leleu',
-                               'Lecavelier des Etangs']
+significant_contributors_list=['Valérie Van Grootel',
+                               'Vincent Bourrier',
+                               'Gwenaël Boué', 
+                               'Adrien Leleu',
+                               'Alain Lecavelier des Etangs']
                                
 
 # ID to add to all papers
-List_of_ID_to_add=['CST','Associate']
+List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']
 
+# Additional people to add in the alphabetical order (this example is anyway on the paper)
+selected_list=[ 'Alexis Brandeker','Tamas Bárczy','Alexis M. S. Smith'] 
 
-# Additional people to add in the alphabetical order
-selected_list=[ 'Brandeker','Bárczy','Smith','Simon']
+# separate list for people nominated by the mission architects:
+MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'G. Polenta']
 
+selected_list.extend(MA_nominees)
 
 # initials : True; Full name : False
 flag_initials=True
@@ -75,8 +82,8 @@ authors_nonalpha.append(major_contirbutors_list)
 authors_nonalpha.append(science_enablers_list)
 authors_nonalpha.append(significant_contributors_list)
 
-
 flatten = lambda l: [item for sublist in l for item in sublist]
+
 authors_nonalpha=flatten(authors_nonalpha)
 
 
@@ -88,24 +95,37 @@ selected_list=flatten(selected_list)
 #load the spreadsheet
 df_list1 = pd.read_csv('CHEOPS_Science_Team_new.csv')
 
+# fix list by changing ID string to list:
+for i,a in df_list1.iterrows(): 
+    #print (i) 
+    df_list1['ID'][i] = df_list1['ID'][i].split(',') 
 
-df_selected=df_list1[df_list1['Surname'].isin(selected_list)]
+
+df_selected=df_list1[df_list1['Ref name'].isin(selected_list)]
 
 #check if all entries were found
-for surname in selected_list:
-    if df_selected.Surname.str.contains(surname).any()==False:
-        input('missing '+surname+' in the csv file')
+for refname in selected_list:
+    if df_selected['Ref name'].str.contains(refname).any()==False:
+        input('missing '+refname+' in the csv file')
 
 #add all the members of the listed IDs (for exemple : CST, Board, etc.)
-for ID in List_of_ID_to_add:
-    df_selected=df_selected.append(df_list1[df_list1['ID']==ID])
+#for ID in List_of_ID_to_add:
+#    df_selected=df_selected.append(df_list1[df_list1['ID']==ID])
 
+mask = np.zeros(df_list1.shape[0], dtype=bool)    
+for id in List_of_ID_to_add: 
+     mask2 = [] 
+     for i,r in df_list1.iterrows(): 
+         mask2.append( id in r['ID']  ) 
+     mask = mask | np.array(mask2) 
+df_selected = df_selected.append(df_list1[mask])   
 
 #create the list of all authors of the paper
-all_authors=df_selected.Surname.tolist()
+all_authors=df_selected['Ref name'].tolist()
 
 # sort all authors from the spreadsheets in alphabetical order, thanks to P. Maxted!
-for name in all_authors:
+for ref_name in all_authors:
+    name = df_list1[df_list1['Ref name'] == ref_name].Surname.tolist()[0] 
     Family_names.append(name.split(' ')[-1])
 
 nfkd = [unicodedata.normalize('NFKD', s) for s in Family_names] 
@@ -140,7 +160,7 @@ for author in authors:
     print('author',author)
     
     
-    author_insistutes_f=df_selected[df_selected['Surname']==author]
+    author_insistutes_f=df_selected[df_selected['Ref name']==author]
     
     
     if flag_initials:
@@ -173,14 +193,20 @@ for author in authors:
             if acknow.strip() not in acknowledgements:
                 acknowledgements.append(acknow.strip())
                
-    
+
+# get all surnames
+
+surnames = []    
+for ref_name in authors:
+    name = df_list1[df_list1['Ref name'] == ref_name].Surname.tolist()[0].strip()
+    surnames.append(name)
    
 
  
 # write the author list, with the institutes indexes, on a column
 outF = open("authors.txt", "w")
 for l,line in zip(range(len(authors)),authors):
-  line_str=first_names[l]+authors[l]+"$^{"
+  line_str=first_names[l]+surnames[l]+"$^{"
   if len(authors_institutes[l])==0:
       line_str+=str(0)+","
   else:
@@ -195,7 +221,7 @@ outF.close()
 
 # write the author list, with the institutes indexes, in a line
 outF = open("authors_lin.txt", "w")
-for l,line in zip(range(len(authors)),authors):
+for l,line in zip(range(len(surnames)),surnames):
   outF.writelines(first_names[l]+line+", ")
 
 outF.close()
