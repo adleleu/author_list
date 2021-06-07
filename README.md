@@ -1,3 +1,3 @@
 # author_list
 
-script to automatically generate author, insitute, and acknowledgment lists for scientific publications.
+script to automatically generate authors, insitutes, and acknowledgments lists for scientific publications.
