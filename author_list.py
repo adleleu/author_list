@@ -24,7 +24,7 @@ lead_author=['Willy Benz']
 major_contirbutors_list=['Anders Erikson',
                          'Sébastien Charnoz',
                          'Andrea Fortier',
-                         'Tom Wilson']
+                         'Thomas G. Wilson']
 
 
 # exactly 4 Science Enablers - rotating from the full list of SE
@@ -58,7 +58,7 @@ MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'G. Polenta']
 selected_list.extend(MA_nominees)
 
 # initials : True; Full name : False
-flag_initials=True
+flag_initials = True
 
 ########################################################################
 ########################################################################
@@ -154,7 +154,7 @@ def get_initials(fullname):
     else:
         initials += name[0].upper()+'. '  # append the initial
 
-  return initials
+  return initials[:-1]
 
 for author in authors:
     print('author',author)
@@ -205,8 +205,8 @@ for ref_name in authors:
  
 # write the author list, with the institutes indexes, on a column
 outF = open("authors.txt", "w")
-for l,line in zip(range(len(authors)),authors):
-  line_str=first_names[l]+surnames[l]+"$^{"
+for l,line in enumerate(authors): 
+  line_str=f"{first_names[l]} {surnames[l]}$^{{"
   if len(authors_institutes[l])==0:
       line_str+=str(0)+","
   else:
@@ -221,9 +221,8 @@ outF.close()
 
 # write the author list, with the institutes indexes, in a line
 outF = open("authors_lin.txt", "w")
-for l,line in zip(range(len(surnames)),surnames):
-  outF.writelines(first_names[l]+line+", ")
-
+for l,name in enumerate(surnames):
+  outF.writelines(f"{first_names[l]} {name}, ")
 outF.close()
 
 
