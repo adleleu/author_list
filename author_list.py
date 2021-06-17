@@ -53,7 +53,7 @@ List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']
 selected_list=[ 'Alexis Brandeker','Tamas Bárczy','Alexis M. S. Smith'] 
 
 # separate list for people nominated by the mission architects:
-MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'G. Polenta']
+MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'G. Polenta', 'Maximilian Buder']
 
 selected_list.extend(MA_nominees)
 
@@ -147,12 +147,29 @@ def get_initials(fullname):
 
   initials = ""
 
+  digraphs = ['Sz', 'sz', 'Gy', 'gy', 'Cs','cs', 'Dz','dz', 'Zs', 'zs']
+
   for name in name_list:  # go through each name
     comp=name.split('-')
     if len(comp)>1:
-        initials += comp[0][0].upper()+'.-'+comp[1][0]+'. '
+        part = comp[0]
+        if len(part) > 1 and part[0:2] in digraphs:
+            part = part[0:2]
+        else:
+            part = part[0].upper()
+        initials += part
+        
+        part = comp[1]
+        if len(part) > 1 and part[0:2] in digraphs:
+            part = part[0:2]
+        else:
+            part = part[0].upper()
+        initials += '.-' + part + '. '
     else:
-        initials += name[0].upper()+'. '  # append the initial
+        if len(name) > 1 and name[0:2] in digraphs:    # not treating ty, ly, ny as they can appear in non-Hungarian names
+            initials += name[0].upper()+name[1]+'. '  # append the initial
+        else:
+            initials += name[0].upper()+'. '  # append the initial
 
   return initials[:-1]
 
