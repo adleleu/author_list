@@ -29,13 +29,13 @@ major_contirbutors_list=['Anders Erikson',
 
 # exactly 4 Science Enablers - rotating from the full list of SE
 science_enablers_list=['Attila Simon',
-                       'Christopher Broeg',
                        'Hans-Gustav Florén',
-                       'Sérgio Sousa'] 
+                       'Sérgio Sousa',
+                       'Pierre F. L. Maxted'] 
                        
 science_enablers_list_full=['Mathias Beck','Anja Bekkelien', 'Willy Benz', 'Nicolas Billot', 'Christopher Broeg', 'Andrew Collier Cameron', 
                             'Adrien Deline', 'David Ehrenreich', 'Hans-Gustav Florén', 
-                            'Andrea Fortier', 'David Futyan', 'Pascal Guterman', 'Sergio Hoyer', 'Pierre Maxted', 'Göran Olofsson', 
+                            'Andrea Fortier', 'David Futyan', 'Pascal Guterman', 'Sergio Hoyer', 'Pierre F. L. Maxted', 'Göran Olofsson', 
                             'Didier Queloz', 'Attila Simon', 'Sérgio Sousa']
 
 #significant contributors (max 15%) 
@@ -97,7 +97,7 @@ df_list1 = pd.read_csv('CHEOPS_Science_Team_new.csv')
 
 # fix list by changing ID string to list:
 for i,a in df_list1.iterrows(): 
-    #print (i) 
+    #print (i, df_list1['Ref name'][i],df_list1['ID'][i]) 
     df_list1['ID'][i] = df_list1['ID'][i].split(',') 
 
 
