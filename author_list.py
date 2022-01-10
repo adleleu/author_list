@@ -24,18 +24,18 @@ lead_author=['Willy Benz']
 major_contirbutors_list=['Anders Erikson',
                          'Sébastien Charnoz',
                          'Andrea Fortier',
-                         'Thomas G. Wilson']
+                         'Thomas Wilson']
 
 
 # exactly 4 Science Enablers - rotating from the full list of SE
 science_enablers_list=['Attila Simon',
                        'Hans-Gustav Florén',
                        'Sérgio Sousa',
-                       'Pierre F. L. Maxted'] 
+                       'Pierre Maxted'] 
                        
 science_enablers_list_full=['Mathias Beck','Anja Bekkelien', 'Willy Benz', 'Nicolas Billot', 'Christopher Broeg', 'Andrew Collier Cameron', 
                             'Adrien Deline', 'David Ehrenreich', 'Hans-Gustav Florén', 
-                            'Andrea Fortier', 'David Futyan', 'Pascal Guterman', 'Sergio Hoyer', 'Pierre F. L. Maxted', 'Göran Olofsson', 
+                            'Andrea Fortier', 'David Futyan', 'Pascal Guterman', 'Sergio Hoyer', 'Pierre Maxted', 'Göran Olofsson', 
                             'Didier Queloz', 'Attila Simon', 'Sérgio Sousa']
 
 #significant contributors (max 15%) 
@@ -50,10 +50,10 @@ significant_contributors_list=['Valérie Van Grootel',
 List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']
 
 # Additional people to add in the alphabetical order (this example is anyway on the paper)
-selected_list=[ 'Alexis Brandeker','Tamas Bárczy','Alexis M. S. Smith'] 
+selected_list=[ 'Alexis Brandeker','Tamas Bárczy','Alexis Smith'] 
 
 # separate list for people nominated by the mission architects:
-MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'G. Polenta', 'Maximilian Buder']
+MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder']
 
 selected_list.extend(MA_nominees)
 
