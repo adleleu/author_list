@@ -93,7 +93,7 @@ selected_list=[selected_list,authors_nonalpha]
 selected_list=flatten(selected_list)
 
 #load the spreadsheet
-df_list1 = pd.read_csv('CHEOPS_Science_Team_new.csv')
+df_list1 = pd.read_csv('CHEOPS_Science_Team.csv')
 
 # fix list by changing ID string to list:
 for i,a in df_list1.iterrows(): 
