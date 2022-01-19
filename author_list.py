@@ -6,6 +6,11 @@
 #                                         Working with full name instead of surname to allow duplicates of surnames
 #                                         fully in line with publication policy: added ESAPA, EO (ex officio), MA (mission architect)
 #                                         works with MA nominees in Notion table
+# updated in January 2022 by C. Broeg and L. Serrano: Adding ORCID ID
+#                                                     Orcid ID can be switched on / off by setting flag_oricid = True / False
+#                                                     institute command can be given (\inst or \affil or $^)
+#                                                     institute list now done using \label{inst:nn} if set with new flag flag_inst_label = True
+#                                                     institute list is concatenated with \and instead of \\
 
 import numpy as np
 import pandas as pd
@@ -13,9 +18,7 @@ import unicodedata
 import csv
 
 
-# Ask C. Broeg for the spreadsheet
-# if any bug occurs : adrien.leleu@unige.ch
-
+# Please inform C. Broeg for updates to the CSV file 
 
 # Lead Author 
 lead_author=['Willy Benz']
@@ -59,6 +62,21 @@ selected_list.extend(MA_nominees)
 
 # initials : True; Full name : False
 flag_initials = True
+flag_orcid = True  # set to False if you don't want the link to orcid ID in the author list
+
+# latex command for affiliation (choose the one suitable for your journal):
+affil = r"\inst"   #or one of the following examples:  affil = r"\affil";   affil = r"$^"
+
+#how to enumerate the institutes: True: uses \label{inst:nn}, False uses $^{nn}$
+flag_inst_label = True 
+
+def affil_close():
+    if affil[0] == '$':
+        return r"$"
+    else:
+        return ""
+
+
 
 ########################################################################
 ########################################################################
@@ -127,6 +145,10 @@ all_authors=df_selected['Ref name'].tolist()
 for ref_name in all_authors:
     name = df_list1[df_list1['Ref name'] == ref_name].Surname.tolist()[0] 
     Family_names.append(name.split('.')[-1])
+    
+df_selected['ORCID'] = df_selected['ORCID'].fillna('missing')
+    
+    
 
 nfkd = [unicodedata.normalize('NFKD', s) for s in Family_names] 
 no_diacrit = [s.encode('ASCII', 'ignore') for s in nfkd]
@@ -186,6 +208,7 @@ for author in authors:
         first_names.append(author_insistutes_f.iloc[0]['First Name'])
     
     author_institutes_list=author_insistutes_f.iloc[0]['Adress']
+    #print(author_institutes_list)
     author_institutes_fnn = author_institutes_list.split(';')
    
     #create the list for the institute indices next to the name
@@ -214,29 +237,39 @@ for author in authors:
 # get all surnames
 
 surnames = []    
+orcid    = [] 
+
 for ref_name in authors:
     name = df_list1[df_list1['Ref name'] == ref_name].Surname.tolist()[0].strip()
     surnames.append(name)
+
+    orcid_number = df_selected[df_selected['Ref name'] == ref_name].ORCID.tolist()[0]
+    #print(orcid_number)
+    orcid.append(orcid_number)
    
 
  
 # write the author list, with the institutes indexes, on a column
 outF = open("authors.txt", "w")
 for l,line in enumerate(authors): 
-  line_str=f"{first_names[l]} {surnames[l]}$^{{"
+  line_str=f"{first_names[l]} {surnames[l]}" + affil + r"{"
   if len(authors_institutes[l])==0:
-      line_str+=str(0)+","
+      line_str+=str(0) + r"}" + affil_close() + ","
   else:
       for k in range(len(authors_institutes[l])):
           line_str+=str(authors_institutes[l][k]+1)+","
-  line_str=line_str[:-1]+"}$, "
+  line_str=line_str[:-1] + r"}" + affil_close()
+  if (orcid[l] != 'missing' and flag_orcid):
+      line_str+=   " $^{\href{https://orcid.org/" + str(orcid[l]) + "}{\includegraphics[scale=0.5]{figures/orcid.jpg}}}$,"
+  else:
+      line_str+=   ", "	
   outF.writelines(line_str)
   outF.write("\n")
 
 outF.close()
 
-
-# write the author list, with the institutes indexes, in a line
+ 
+# write the author list
 outF = open("authors_lin.txt", "w")
 for l,name in enumerate(surnames):
   outF.writelines(f"{first_names[l]} {name}, ")
@@ -246,7 +279,10 @@ outF.close()
 # write the institute list
 outF = open("institutes.txt", "w")
 for l,line in zip(range(len(institutes)),institutes):
-  line_str="$^{"+str(l+1)+"}$ "+line.rstrip()+"\\\\"
+  if flag_inst_label:
+    line_str="\label{inst:"+str(l+1)+"} "+line.rstrip()+ r" \and"
+  else:
+    line_str="$^{"+str(l+1)+"}$ "+line.rstrip()+r" \and"
   outF.writelines(line_str)
   outF.write("\n")
 
