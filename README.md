@@ -29,8 +29,10 @@ The tool must be configured by editing the python code. The following items have
 A number of lists must be populated using "Ref name":
 
 * lead_author
+* major_contirbutors_list: additional key contributors to the paper (typically up to 4)
 * science_enablers_list: 4 science enables chosen from the science_enablers_list_full
-* significant_contributors_list
+* significant_contributors_list: up to 15% listed before the alphabetical list
+* MA_nominees: name 4 people selected by the mission architects (will be added to the alphabetical list)
 * selected_list: additional authors in the alphabetical order not in `List_of_ID_to_add`
 
 All members of the following group IDs will be added in alphabetical order:
@@ -38,7 +40,7 @@ All members of the following group IDs will be added in alphabetical order:
 List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']
 ```
 
-These lists define the content and order of the author list. 
+These lists define the content and order of the author list. The order will be as in the bullet list above.
 
 In addition, the following configurations are possible:
 
