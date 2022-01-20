@@ -36,7 +36,7 @@ A number of lists must be populated using "Ref name":
 * selected_list: additional authors in the alphabetical order not in `List_of_ID_to_add`
 
 All members of the following group IDs will be added in alphabetical order:
-```
+```python
 List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']
 ```
 
