@@ -60,3 +60,7 @@ in the same directory as the CSV file and it will output the following files:
 * authors_lin.txt: simple list of authors
 * institutes.txt: latex code to include in the paper for the institues with the appropriate idexes for the author list
 * acknowledgements.txt: the string to put for acknowledgements. This part may need some manual editing in case of overlaps of almost similar text.
+
+## Updating the CSV database file
+
+Please make sure that your information in the consortium DB is up-to-date. It will periodically be exported to CSV and pushed to github. Let C. Broeg know in case you need to make updates for your paper.
