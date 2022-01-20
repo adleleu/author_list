@@ -61,8 +61,8 @@ MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Ma
 selected_list.extend(MA_nominees)
 
 # initials : True; Full name : False
-flag_initials = True
-flag_orcid = True  # set to False if you don't want the link to orcid ID in the author list
+flag_initials = True # set to False if you want to pring full Names, not initials
+flag_orcid    = True # set to False if you don't want the link to orcid ID in the author list
 
 # latex command for affiliation (choose the one suitable for your journal):
 affil = r"\inst"   #or one of the following examples:  affil = r"\affil";   affil = r"$^"
