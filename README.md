@@ -12,7 +12,7 @@ The author_list tool was mainly devoloped to be used in the frame of the ESA CHE
 
 ### Database of people
 
-The script uses the CSV file containing all members of the CHEOPS Science Team and associated authors ("CHEOPS_Science_Team.csv"). It can in principle be replaced by any other list. Mandatory columns are
+The script uses the CSV file containing all members of the CHEOPS Science Team and associated authors ("CHEOPS_Science_Team.csv"). It can in principle be replaced by any other list. Mandatory columns are:
 
 * "Ref name": names to use as reference when building the first and special author list
 * "ID": group id that the author belongs to used to identify in `List_of_ID_to_add`, Multiple entries must be separated by ";"
@@ -44,7 +44,7 @@ These lists define the content and order of the author list. The order will be a
 
 In addition, the following configurations are possible:
 
-* flag_initials: set to False if you want to pring full Names, not initials
+* flag_initials: set to False if you want to print full Names, not initials
 * flag_orcid:  set to False if you don't want the link to orcid ID in the author list
 * affil: LaTex command to use for institue  (Replace by your journal needs, e.g. one of the following examples:  affil = r"\affil";   affil = r"$^"
 
