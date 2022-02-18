@@ -86,6 +86,7 @@ def affil_close():
 first_names=[]
 institutes=[]
 Family_names=[]
+authors_emails=[]
 authors_institutes=[]
 acknowledgements=["CHEOPS is an ESA mission in partnership with Switzerland with important contributions to the payload and the ground segment "+
                    "from Austria, Belgium, France, Germany, Hungary, Italy, Portugal, Spain, Sweden, and the United Kingdom. "+
@@ -232,7 +233,11 @@ for author in authors:
         for acknow in author_acknow_fnn:
             if acknow.strip() not in acknowledgements:
                 acknowledgements.append(acknow.strip())
-               
+
+# List of emails
+    author_email=author_insistutes_f.iloc[0]['EMAIL']
+    authors_emails.append(author_email)
+
 
 # get all surnames
 
@@ -301,3 +306,14 @@ for l,line in zip(range(len(acknowledgements)),acknowledgements):
 
 outF.close()
 
+# write a list of email addresses
+outF = open("emails.txt", "w")
+for l,line in zip(range(len(authors_emails)),authors_emails):
+  toprint=line.rstrip()
+  if toprint[-1]=='.':
+      outF.writelines(line.rstrip()+" ")
+  else:
+      outF.writelines(line.rstrip()+", ")
+  #outF.write("\n")
+
+outF.close()
