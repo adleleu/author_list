@@ -53,10 +53,10 @@ significant_contributors_list=['Valérie Van Grootel',
 List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']
 
 # Additional people to add in the alphabetical order (this example is anyway on the paper)
-selected_list=[ 'Alexis Brandeker','Tamas Bárczy','Alexis Smith'] 
+selected_list=[ 'Alexis Brandeker','Tamas Bárczy','Alexis Smith', 'Carina Persson'] 
 
 # separate list for people nominated by the mission architects:
-MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder']
+MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder', 'Thierry de Roche']
 
 selected_list.extend(MA_nominees)
 
