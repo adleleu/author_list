@@ -60,15 +60,17 @@ MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Ma
 
 selected_list.extend(MA_nominees)
 
-# initials : True; Full name : False
-flag_initials = True # set to False if you want to pring full Names, not initials
-flag_orcid    = False # set to False if you don't want the link to orcid ID in the author list
+# BEGIN FLAGS to modify output style ===============================================================
 
-# latex command for affiliation (choose the one suitable for your journal):
-affil = r"\inst"   #or one of the following examples:  affil = r"\affil";   affil = r"$^"
+flag_initials    = True # set to False if you want to print full Names, not initials
+flag_orcid       = False # set to False if you don't want the link to orcid ID in the author list
+author_separator = r", " # separator used between authors: ", " or r"\and" 
+                   # latex command for affiliation (choose the one suitable for your journal):
+affil            = r"\inst"   #or one of the following examples:  affil = r"\affil";   affil = r"$^"
 
-#how to enumerate the institutes: True: uses \label{inst:nn}, False uses $^{nn}$
-flag_inst_label = True 
+flag_inst_label  = True # how to enumerate the institutes: True: uses \label{inst:nn}, False uses $^{nn}$
+
+# END FLAGS to modify output style ===============================================================
 
 def affil_close():
     if affil[0] == '$':
@@ -266,9 +268,9 @@ for l,line in enumerate(authors):
           line_str+=str(authors_institutes[l][k]+1)+","
   line_str=line_str[:-1] + r"}" + affil_close()
   if (orcid[l] != 'missing' and flag_orcid):
-      line_str+=   " $^{\href{https://orcid.org/" + str(orcid[l]) + "}{\includegraphics[scale=0.5]{figures/orcid.jpg}}}$,"
-  elif l != last_author_idx:
-      line_str+=   ", "	
+      line_str+=   " $^{\href{https://orcid.org/" + str(orcid[l]) + "}{\includegraphics[scale=0.5]{figures/orcid.jpg}}}$"
+  if l != last_author_idx:
+      line_str+=   author_separator
   outF.writelines(line_str)
   outF.write("\n")
 
