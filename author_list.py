@@ -62,7 +62,7 @@ selected_list.extend(MA_nominees)
 
 # initials : True; Full name : False
 flag_initials = True # set to False if you want to pring full Names, not initials
-flag_orcid    = True # set to False if you don't want the link to orcid ID in the author list
+flag_orcid    = False # set to False if you don't want the link to orcid ID in the author list
 
 # latex command for affiliation (choose the one suitable for your journal):
 affil = r"\inst"   #or one of the following examples:  affil = r"\affil";   affil = r"$^"
@@ -256,6 +256,7 @@ for ref_name in authors:
  
 # write the author list, with the institutes indexes, on a column
 outF = open("authors.txt", "w")
+last_author_idx = len(authors) - 1
 for l,line in enumerate(authors): 
   line_str=f"{first_names[l]} {surnames[l]}" + affil + r"{"
   if len(authors_institutes[l])==0:
@@ -266,7 +267,7 @@ for l,line in enumerate(authors):
   line_str=line_str[:-1] + r"}" + affil_close()
   if (orcid[l] != 'missing' and flag_orcid):
       line_str+=   " $^{\href{https://orcid.org/" + str(orcid[l]) + "}{\includegraphics[scale=0.5]{figures/orcid.jpg}}}$,"
-  else:
+  elif l != last_author_idx:
       line_str+=   ", "	
   outF.writelines(line_str)
   outF.write("\n")
@@ -283,11 +284,14 @@ outF.close()
 
 # write the institute list
 outF = open("institutes.txt", "w")
-for l,line in zip(range(len(institutes)),institutes):
+# for l,line in zip(range(len(institutes)),institutes):
+last_inst_idx = len(institutes) - 1
+for l,line in enumerate(institutes):
   if flag_inst_label:
-    line_str="\label{inst:"+str(l+1)+"} "+line.rstrip()+ r" \and"
+    line_str="\label{inst:"+str(l+1)+"} "+line.rstrip()
   else:
-    line_str="$^{"+str(l+1)+"}$ "+line.rstrip()+r" \and"
+    line_str="$^{"+str(l+1)+"}$ "+line.rstrip()
+  if l != last_inst_idx: line_str = line_str +r" \and"
   outF.writelines(line_str)
   outF.write("\n")
 
