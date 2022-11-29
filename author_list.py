@@ -52,8 +52,8 @@ significant_contributors_list=['Valérie Van Grootel',
 # ID to add to all papers
 List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']
 
-# Additional people to add in the alphabetical order (this example is anyway on the paper)
-selected_list=[ 'Alexis Brandeker','Tamas Bárczy','Alexis Smith', 'Carina Persson'] 
+# Additional people to add in the alphabetical order (this is an example)
+selected_list=[ 'Vikash Singh','Giovanni Bruno'] 
 
 # separate list for people nominated by the mission architects:
 MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder', 'Thierry de Roche']
@@ -90,10 +90,11 @@ institutes=[]
 Family_names=[]
 authors_emails=[]
 authors_institutes=[]
-acknowledgements=["CHEOPS is an ESA mission in partnership with Switzerland with important contributions to the payload and the ground segment "+
+acknowledgements_always=["CHEOPS is an ESA mission in partnership with Switzerland with important contributions to the payload and the ground segment "+
                    "from Austria, Belgium, France, Germany, Hungary, Italy, Portugal, Spain, Sweden, and the United Kingdom. "+
                    "The CHEOPS Consortium would like to gratefully acknowledge the support received by all the agencies, offices, "+
                    "universities, and industries involved. Their flexibility and willingness to explore new approaches were essential to the success of this mission."]
+acknowledgements = acknowledgements_always.copy()
 institutes_Id=[]
 
 
@@ -198,6 +199,7 @@ def get_initials(fullname):
 
   return initials[:-1]
 
+author_ack = {}
 for author in authors:
     print('author',author)
     
@@ -233,12 +235,103 @@ for author in authors:
     if str(author_acknow_list) != 'nan' :
         author_acknow_fnn = author_acknow_list.split(';')
         for acknow in author_acknow_fnn:
-            if acknow.strip() not in acknowledgements:
-                acknowledgements.append(acknow.strip())
+            ack_stripped = acknow.strip()
+            if ack_stripped not in acknowledgements:
+                acknowledgements.append(ack_stripped)
+                author_ack[ack_stripped] = [author,]                
+            else:
+                # print(author)
+                author_ack[ack_stripped].append(author) 
 
-# List of emails
+    
+
+    # List of emails
     author_email=author_insistutes_f.iloc[0]['EMAIL']
     authors_emails.append(author_email)
+
+# print (author_ack)
+
+def author_name_to_initials(authors):
+    result = []
+
+    for author in authors:
+        allnames = author.split(" ")
+        initials = ""
+        for n in allnames[:-1]:
+            initials = initials + n[:1]
+        initials = initials + allnames[-1][:2]
+        result.append(initials)
+    return result
+
+def magic_merge_acknowledgements(author_ack):
+    "automagically find similar acknowledgement strings and group authors TA and VV acknowledge..."
+
+        # pick out all that contain acknowledge
+    author_ack2 = {}
+    author_ack_no_duplicates = {}
+    for ack, author in author_ack.items():
+        if "acknowledge" in ack.lower():
+            idx = ack.lower().index("acknowledge")
+            ack_tail = ack[idx+12:].strip()
+            if ack_tail in author_ack2:
+                # print(author,author_ack2[ack_tail])
+                author_ack2[ack_tail].extend(author) 
+                # print(author,author_ack2[ack_tail])
+            else:   
+                author_ack2[ack_tail] = author.copy()
+                author_ack_no_duplicates[ack] = author.copy()
+                # print(author)
+        else:
+            author_ack_no_duplicates[ack] = author.copy()
+
+        
+    # delete single entries
+    dict3={}
+    for key, author in author_ack2.items():
+        if len(author) > 1:
+            dict3[key]=author
+    # reconstruct full string with all authors
+    dict4={}
+    for key, authors in dict3.items():
+        authors_initials = (author_name_to_initials(authors))
+        text = key
+        if len(authors_initials) == 2:
+            prefix = authors_initials[0] + " and " + authors_initials[1] + " acknowledge "
+        else:
+            prefix = ""
+            for a in authors_initials[:-2]:
+                prefix = prefix + a + ", "
+            prefix = prefix + authors_initials[-2] + ", and " + authors_initials[-1] + " acknowledge "
+        dict4[prefix + key ] = authors
+
+    def author_in_dict(author, dict0):
+        author_in_dict = False
+        for ack, auth in dict0.items():
+            if author in auth: 
+                author_in_dict=True
+                return True, ack
+        return author_in_dict, None
+
+    # now go through author_ack and check if any names need updates
+    result_dict = {}
+    for ack, author in author_ack_no_duplicates.items():
+        # if len(author) == 1:
+            # if author in any value of dict4, replace ack with dict4 version
+        if author_in_dict(author[0], dict4)[0]:
+            tmp, new_ack = author_in_dict(author[0], dict4)
+            result_dict[new_ack] = author_ack_no_duplicates[ack]
+            # print("new ack for ", author[0], new_ack)
+        else:
+            result_dict[ack] = author_ack_no_duplicates[ack]
+            # print("keeping entry", author, ack)
+    return result_dict,author_ack_no_duplicates
+
+res,author_ack_no_duplicates = (magic_merge_acknowledgements(author_ack=author_ack))
+# res = author_ack
+author_ack = res
+
+# for ack, auth in author_ack_no_duplicates.items():
+#     print(ack, auth)
 
 
 # get all surnames
@@ -299,6 +392,26 @@ for l,line in enumerate(institutes):
 
 outF.close()
 
+
+# write the acknowledgement list
+outF = open("acknowledgements_magic_merge.txt", "w")
+for line in acknowledgements_always:
+  toprint=line.rstrip()
+  if toprint[-1]=='.':
+      outF.writelines(line.rstrip()+" ")
+  else:
+      outF.writelines(line.rstrip()+". ")
+  outF.write("\n")
+
+for ack, author in author_ack.items():
+  toprint = ack
+  if toprint[-1]=='.':
+      outF.writelines(toprint+" ")
+  else:
+      outF.writelines(toprint+". ")
+  outF.write("\n")
+
+outF.close()
 
 # write the acknowledgement list
 outF = open("acknowledgements.txt", "w")
