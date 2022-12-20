@@ -53,7 +53,7 @@ significant_contributors_list=['Valérie Van Grootel',
 List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']
 
 # Additional people to add in the alphabetical order (this is an example)
-selected_list=[ 'Vikash Singh','Giovanni Bruno'] 
+selected_list=[ 'Vikash Singh','Giovanni Bruno', 'Jo Ann Egger'] 
 
 # separate list for people nominated by the mission architects:
 MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder', 'Thierry de Roche']
