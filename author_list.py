@@ -11,14 +11,21 @@
 #                                                     institute command can be given (\inst or \affil or $^)
 #                                                     institute list now done using \label{inst:nn} if set with new flag flag_inst_label = True
 #                                                     institute list is concatenated with \and instead of \\
+# Updated March 2023 by C. Broeg: including use of fields joined and Departed for CST, Associates, 
+#                                                     Board, MA to allow for variable team composition.
+#                                                     adding variable paper_date to specify timestamp
 
 import numpy as np
 import pandas as pd
 import unicodedata
 import csv
-
+from datetime import datetime
 
 # Please inform C. Broeg for updates to the CSV file 
+
+
+# Date of the paper (relevant to know which CST members to include automatically)
+paper_date = datetime(year=2023, month=3, day=1)
 
 # Lead Author 
 lead_author=['Willy Benz']
@@ -63,7 +70,7 @@ selected_list.extend(MA_nominees)
 # BEGIN FLAGS to modify output style ===============================================================
 
 flag_initials    = True # set to False if you want to print full Names, not initials
-flag_orcid       = False # set to False if you don't want the link to orcid ID in the author list
+flag_orcid       = True # set to False if you don't want the link to orcid ID in the author list
 author_separator = r", " # separator used between authors: ", " or r"\and" 
                    # latex command for affiliation (choose the one suitable for your journal):
 affil            = r"\inst"   #or one of the following examples:  affil = r"\affil";   affil = r"$^"
@@ -114,8 +121,10 @@ authors_nonalpha=flatten(authors_nonalpha)
 selected_list=[selected_list,authors_nonalpha]
 selected_list=flatten(selected_list)
 
-#load the spreadsheet
-df_list1 = pd.read_csv('CHEOPS_Science_Team.csv')
+#load the spreadsheet, parse some columns as datetime
+dates = ['Departed', 'joined']
+
+df_list1 = pd.read_csv('CHEOPS_Science_Team.csv', parse_dates=dates)
 
 # fix list by changing ID string to list:
 for i,a in df_list1.iterrows(): 
@@ -135,10 +144,10 @@ for refname in selected_list:
 #    df_selected=df_selected.append(df_list1[df_list1['ID']==ID])
 
 mask = np.zeros(df_list1.shape[0], dtype=bool)    
-for id in List_of_ID_to_add: 
+for id in List_of_ID_to_add: # check all IDs in the "always in paper id list"  using the dataframe method .apply would have been cleaner...
      mask2 = [] 
      for i,r in df_list1.iterrows(): 
-         mask2.append( id in r['ID']  ) 
+         mask2.append( (id in r['ID']) and r['Departed'] > paper_date and r['joined'] < paper_date   )  # add AND with date JOINED and DEPARTED values
      mask = mask | np.array(mask2) 
 df_selected = df_selected.append(df_list1[mask])   
 
