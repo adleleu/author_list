@@ -20,4 +20,4 @@ print("\nCSV Data after deleting columns:\n")
 print(data)
 
 # write new table
-data.to_csv('CHEOPS_Science_Team.csv', index=False)
+data.to_csv('CHEOPS_Science_Team.csv',columns = ["Ref name","First Name","Surname","ID","joined","Departed","EMAIL","Adress","Acknow","ORCID"], index=False)
