@@ -127,9 +127,14 @@ dates = ['Departed', 'joined']
 df_list1 = pd.read_csv('CHEOPS_Science_Team.csv', parse_dates=dates)
 
 # fix list by changing ID string to list:
-for i,a in df_list1.iterrows(): 
+# for i,a in df_list1.iterrows(): 
+#     #print (i, df_list1['Ref name'][i],df_list1['ID'][i]) 
+#     df_list1['ID'][i] = df_list1['ID'][i].split(',') 
+
+for i in df_list1.index: 
     #print (i, df_list1['Ref name'][i],df_list1['ID'][i]) 
-    df_list1['ID'][i] = df_list1['ID'][i].split(',') 
+    df_list1.at[i,'ID'] = df_list1.at[i,'ID'].split(',') 
+
 
 
 df_selected=df_list1[df_list1['Ref name'].isin(selected_list)]
