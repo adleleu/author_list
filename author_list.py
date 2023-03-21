@@ -44,9 +44,9 @@ science_enablers_list=['Attila Simon',
                        'Pierre Maxted'] 
                        
 science_enablers_list_full=['Mathias Beck','Anja Bekkelien', 'Willy Benz', 'Nicolas Billot', 'Christopher Broeg', 'Andrew Collier Cameron', 
-                            'Adrien Deline', 'David Ehrenreich', 'Hans-Gustav Florén', 
-                            'Andrea Fortier', 'David Futyan', 'Pascal Guterman', 'Sergio Hoyer', 'Pierre Maxted', 'Göran Olofsson', 
-                            'Didier Queloz', 'Attila Simon', 'Sérgio Sousa']
+                            'Adrien Deline', 'David Ehrenreich', 'Hans-Gustav Florén', 'Andrea Fortier', 
+                            'David Futyan', 'Pascal Guterman', 'Sergio Hoyer', 'Pierre Maxted', 'Göran Olofsson', 
+                            'Didier Queloz', 'Attila Simon', 'Sérgio Sousa', 'Monika Lendl']
 
 #significant contributors (max 15%) 
 significant_contributors_list=['Valérie Van Grootel',
