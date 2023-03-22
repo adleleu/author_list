@@ -21,6 +21,8 @@ The script uses the CSV file containing all members of the CHEOPS Science Team a
 * "First name": first name including additional initials
 * "Adress": affiliation to print in the article. Multiple entries must be separated by ";"
 * "Acknow": acknowledgements. Muliple entries separated by ";"
+* "joined": date of joining the team; mandatory field for members of the `List_of_ID_to_add`
+* "Departed": date of leaving the team; mandatory field for members of the `List_of_ID_to_add`
 
 ### Editing the author_list.py
 
@@ -28,9 +30,10 @@ The tool must be configured by editing the python code. The following items have
 
 A number of lists must be populated using "Ref name":
 
+* `paper_date` date of the paper - to select the people on the team at the time
 * lead_author
 * major_contirbutors_list: additional key contributors to the paper (typically up to 4)
-* science_enablers_list: 4 science enables chosen from the science_enablers_list_full
+* science_enablers_list: 4 science enables chosen from the `science_enablers_list_full`
 * significant_contributors_list: up to 15% listed before the alphabetical list
 * MA_nominees: name 5 people selected by the mission architects (will be added to the alphabetical list)
 * selected_list: additional authors in the alphabetical order not in `List_of_ID_to_add`
@@ -62,6 +65,7 @@ in the same directory as the CSV file and it will output the following files:
 * authors_lin.txt: simple list of authors
 * institutes.txt: latex code to include in the paper for the institues with the appropriate idexes for the author list
 * acknowledgements.txt: the string to put for acknowledgements. This part may need some manual editing in case of overlaps of almost similar text.
+* acknowledgements_magic_merge.txt like the previous but same text starting with xxx acknowledge will be merged into one.
 
 ## Updating the CSV database file
 
