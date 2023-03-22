@@ -47,9 +47,12 @@ These lists define the content and order of the author list. The order will be a
 
 In addition, the following configurations are possible:
 
-* flag_initials: set to False if you want to print full Names, not initials
-* flag_orcid:  set to False if you don't want the link to orcid ID in the author list
-* affil: LaTex command to use for institue  (Replace by your journal needs, e.g. one of the following examples:  affil = r"\affil";   affil = r"$^"
+* `flag_initials`: set to False if you want to print full Names, not initials
+* `flag_orcid`:  set to False if you don't want the link to orcid ID in the author list
+* `affil`: LaTex command to use for institue  (Replace by your journal needs, e.g. one of the following examples:  affil = r"\affil";   affil = r"$^"
+* `author_separator = ", "`: separator used between authors: ", " or "\and" 
+* `flag_inst_label  = True`: how to enumerate the institutes: True: uses \label{inst:nn}, False uses $^{nn}$
+
 
 ## Output
 
@@ -61,11 +64,11 @@ Simply run the code as
 
 in the same directory as the CSV file and it will output the following files:
 
-* authors.txt: latex code to include in the paper to list the authors.
-* authors_lin.txt: simple list of authors
-* institutes.txt: latex code to include in the paper for the institues with the appropriate idexes for the author list
-* acknowledgements.txt: the string to put for acknowledgements. This part may need some manual editing in case of overlaps of almost similar text.
-* acknowledgements_magic_merge.txt like the previous but same text starting with xxx acknowledge will be merged into one.
+* `authors.txt`: latex code to include in the paper to list the authors.
+* `authors_lin.txt`: simple list of authors
+* `institutes.txt`: latex code to include in the paper for the institues with the appropriate idexes for the author list
+* `acknowledgements.txt`: the string to put for acknowledgements. This part may need some manual editing in case of overlaps of almost similar text.
+* `acknowledgements_magic_merge.txt`: like the previous but same text starting with xxx acknowledge will be merged into one.
 
 ## Updating the CSV database file
 
