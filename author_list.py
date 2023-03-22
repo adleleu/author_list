@@ -131,8 +131,10 @@ df_list1 = pd.read_csv('CHEOPS_Science_Team.csv', parse_dates=dates)
 #     #print (i, df_list1['Ref name'][i],df_list1['ID'][i]) 
 #     df_list1['ID'][i] = df_list1['ID'][i].split(',') 
 
+
+df_list1['ID'] = df_list1['ID'].fillna("")  #allow rows without ID
+
 for i in df_list1.index: 
-    #print (i, df_list1['Ref name'][i],df_list1['ID'][i]) 
     df_list1.at[i,'ID'] = df_list1.at[i,'ID'].split(',') 
 
 
