@@ -190,7 +190,7 @@ def get_initials(fullname):
 
   initials = ""
 
-  digraphs = ['Sz', 'sz', 'Gy', 'gy', 'Cs','cs', 'Dz','dz', 'Zs', 'zs']
+  digraphs = ['Sz', 'sz', 'Gy', 'gy', 'Cs','cs', 'Dz','dz', 'Zs', 'zs', 'Ch', 'ch']
 
   for name in name_list:  # go through each name
     comp=name.split('-')
