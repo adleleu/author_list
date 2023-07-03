@@ -26,7 +26,7 @@ from datetime import datetime
 
 # Date of the paper (relevant to know which CST members to include automatically)
 #
-paper_date = datetime(year=2023, month=5, day=1)  # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   SET PAPER DATE HERE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+paper_date = datetime(year=2023, month=7, day=3)  # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   SET PAPER DATE HERE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # Lead Author 
 lead_author=['Willy Benz']
