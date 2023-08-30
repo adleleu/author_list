@@ -43,7 +43,8 @@ science_enablers_list=['Attila Simon',
                        'Hans-Gustav Florén',
                        'Sérgio Sousa',
                        'Pierre Maxted'] 
-                       
+
+# see Notion pager for full list of SE                       
 science_enablers_list_full=['Mathias Beck','Anja Bekkelien', 'Willy Benz', 'Nicolas Billot', 'Christopher Broeg', 'Andrew Collier Cameron', 
                             'Adrien Deline', 'David Ehrenreich', 'Hans-Gustav Florén', 'Andrea Fortier', 
                             'David Futyan', 'Pascal Guterman', 'Sergio Hoyer', 'Pierre Maxted', 'Göran Olofsson', 
@@ -61,10 +62,10 @@ significant_contributors_list=['Valérie Van Grootel',
 List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']
 
 # Additional people to add in the alphabetical order (this is an example)
-selected_list=[ 'Vikash Singh','Giovanni Bruno', 'Jo Ann Egger'] 
+selected_list=[ 'Vikash Singh','Giovanni Bruno', 'Jo Ann Egger', 'Tiziano Zingales'] 
 
 # separate list for people nominated by the mission architects:
-MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder', 'Thierry de Roche']
+MA_nominees = ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder', 'Bernd Ulmer']
 
 selected_list.extend(MA_nominees)
 
@@ -123,7 +124,7 @@ selected_list=[selected_list,authors_nonalpha]
 selected_list=flatten(selected_list)
 
 #load the spreadsheet, parse some columns as datetime
-dates = ['Departed', 'joined']
+dates = ['Departed', 'Joined']
 
 df_list1 = pd.read_csv('CHEOPS_Science_Team.csv', parse_dates=dates)
 
@@ -155,7 +156,7 @@ mask = np.zeros(df_list1.shape[0], dtype=bool)
 for id in List_of_ID_to_add: # check all IDs in the "always in paper id list"  using the dataframe method .apply would have been cleaner...
      mask2 = [] 
      for i,r in df_list1.iterrows(): 
-         mask2.append( (id in r['ID']) and r['Departed'] > paper_date and r['joined'] < paper_date   )  # add AND with date JOINED and DEPARTED values
+         mask2.append( (id in r['ID']) and r['Departed'] > paper_date and r['Joined'] < paper_date   )  # add AND with date JOINED and DEPARTED values
      mask = mask | np.array(mask2) 
 df_selected = df_selected.append(df_list1[mask])   
 
