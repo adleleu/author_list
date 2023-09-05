@@ -102,7 +102,8 @@ authors_institutes=[]
 acknowledgements_always=["CHEOPS is an ESA mission in partnership with Switzerland with important contributions to the payload and the ground segment "+
                    "from Austria, Belgium, France, Germany, Hungary, Italy, Portugal, Spain, Sweden, and the United Kingdom. "+
                    "The CHEOPS Consortium would like to gratefully acknowledge the support received by all the agencies, offices, "+
-                   "universities, and industries involved. Their flexibility and willingness to explore new approaches were essential to the success of this mission."]
+                   "universities, and industries involved. Their flexibility and willingness to explore new approaches were essential to the success of this mission."
+                   +" CHEOPS data analysed in this article will be made available in the CHEOPS mission archive (https://cheops.unige.ch/archive_browser/)."]
 acknowledgements = acknowledgements_always.copy()
 institutes_Id=[]
 
