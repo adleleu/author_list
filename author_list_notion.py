@@ -27,10 +27,10 @@
 #
 #       USAGE
 #
-#  place file notion-server-details.yaml in same directory (can be obtained from CHEOPS plone site)
-#  edit the configuration file author_list_config.yaml for your choice of authors and preferences
-#  If you use additional authors in a CSV file, edit the example file additional_authors.csv and add your authors
-#  Run the script using python3 author_list.py
+#  - place file notion-server-details.yaml in same directory (can be obtained from CHEOPS plone site)
+#  - edit the configuration file author_list_config.yaml for your choice of authors and preferences
+#  - If you use additional authors in a CSV file, edit the example file additional_authors.csv and add your authors
+#  - Run the script using python3: >python author_list.py
 #
 #  The Script will output a number of text files that you can copy into your latex manuscript
 #
@@ -38,6 +38,8 @@
 #       PREREQUISITES
 #
 #   The script depends on the python modules numpy, pandas, notion_client, yaml
+#   When using the CSV file, the format of the example must be strictly adhered to 
+#   and first name, surname, and address shall not be empty
 #
 ####################################################################################
 
