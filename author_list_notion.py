@@ -164,7 +164,7 @@ def find_non_printable_characters(text):
     if not isinstance(text, str):
         return []
     # Use a regular expression to find non-printable characters
-    regexp = r'[^\x20-\x7E\xC0-\xFF\'"’”]'
+    # regexp = r'[^\x20-\x7E\xC0-\xFF\'"’”]'
     regexp = r'[^\x20-\x7E\xA1-\xFF\'"’”\u201C\u201D\u201E\u2018\u2016\u2017]'
     
 
