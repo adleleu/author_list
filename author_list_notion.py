@@ -50,7 +50,7 @@ import unicodedata
 from notion_client import Client 
 from notion_client.helpers import collect_paginated_api
 from pprint import pprint
-import yaml 
+import yaml, re 
 
 # Please inform C. Broeg or D. Ehrenreich for updates to the Notion page
 
@@ -160,16 +160,27 @@ def affil_close():
 ########################################################################
 ########################################################################
 ########################################################################
+def find_non_printable_characters(text):
+    if not isinstance(text, str):
+        return []
+    # Use a regular expression to find non-printable characters
+    regexp = r'[^\x20-\x7E\xC0-\xFF\'"’”]'
+    regexp = r'[^\x20-\x7E\xA1-\xFF\'"’”\u201C\u201D\u201E\u2018\u2016\u2017]'
+    
+
+    non_printable_chars = re.findall(regexp, text)
+    if non_printable_chars!= []: print(non_printable_chars)
+    return non_printable_chars
 
 def get_CST_DB():
 
-
+    print("Contacting Notion DB...")
     with open("notion-server-details.yaml","r") as file_object:
         config_dict = yaml.load(file_object, Loader=yaml.SafeLoader)
 
     client = Client(auth=config_dict['server']['notion_token_cheops']) 
     page_response = collect_paginated_api( client.databases.query,database_id=config_dict['server']['cheops_db_id'])
-
+    print("Data retrieved from Notion.\n")
 
     Ref_Name = []
     ID = []
@@ -254,6 +265,8 @@ def get_CST_DB():
     db= pd.DataFrame.from_dict(table)
     db['Departed'] = pd.to_datetime(db['Departed'])
     db['Joined'] = pd.to_datetime(db['Joined'])
+
+
 
     return db
 
@@ -373,6 +386,25 @@ elif Source_of_author_data == 'Notion and CSV':
     df_author_information_DB= pd.concat([df_author_information_DB_Notion,df_author_information_DB_CSV]).drop_duplicates(subset="Ref_Name", keep='last') # set to 'fist'if you want to give preference to Notion
 else:
     assert False, "Please set Source_of_author_data to one of 'Notion', 'CSV', 'Notion_and_CSV'"
+
+
+#find non-printable characters ==========================================
+
+# Select only string columns
+string_columns = df_author_information_DB.select_dtypes(include=['object'])
+
+# Apply the function to the string columns
+df_with_non_printable = string_columns.applymap(find_non_printable_characters)
+
+
+rows_with_non_printable = df_with_non_printable.applymap(lambda x: len(x) > 0)
+
+df_containing_non_printable = df_author_information_DB[rows_with_non_printable.any(axis=1)]
+if len(df_containing_non_printable):
+    print("\n Warning: Some fields contain non-printing characters:")
+    pprint(df_containing_non_printable)
+    print("done \n")
+
 
 
 # warn for empty entries:

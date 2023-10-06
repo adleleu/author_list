@@ -1,4 +1,4 @@
-paper_date: 2023-07-03 # date of the paper used to select departed or newly joined ST/board/associate/EO members
+paper_date: 2023-07-03 # date of paper 1st circulation to select departed or newly joined ST/board/associate/EO members
 authors:
   lead_author: Andrea Fortier
   # up to 4 major contributors:
@@ -10,7 +10,7 @@ authors:
                                'David Futyan','Hans-Gustav Florén', 'Maximilian Günther', 'Alexis Heitzmann', 'Sergio Hoyer', 'Kate G. Isaak', 'Sérgio Sousa', 
                                'Manu Stalport', 'Arnaud Turin', 'Peter Verhoeve'  ]
   # Remaining authors to add to alphabetical list (all that are not automatically added such as CST, Associate, Board, EO, MA, ESAPS):                          
-  selected_list: ['Gisbert Peter', 'Roland Ottensamer', 'Demetrio Magrin', 'Matteo Munari', 'Amador Lopez Pina', 'David Modrego', 'Pascal Guterman', 'test man'] 
+  selected_list: ['Gisbert Peter', 'Roland Ottensamer', 'Demetrio Magrin', 'Matteo Munari', 'Amador Lopez Pina', 'David Modrego', 'Pascal Guterman', 'test man','Tiziano Zingales'] 
   # 5 People nominated by the MAs:
   MA_nominees: ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder', 'Bernd Ulmer']
 filenames:
