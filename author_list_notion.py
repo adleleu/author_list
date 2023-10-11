@@ -669,7 +669,7 @@ print("File authors.txt written.")
 # write the author list
 outF = open("authors_lin.txt", "w")
 for l,name in enumerate(surnames):
-  outF.writelines(f"{first_names[l]} {name}, ")
+  outF.writelines(f"{first_names[l]} {name},\n")
 outF.close()
 print("File authors_lin.txt written.")
 

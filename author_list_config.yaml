@@ -10,7 +10,7 @@ authors:
                                'David Futyan','Hans-Gustav Florén', 'Maximilian Günther', 'Alexis Heitzmann', 'Sergio Hoyer', 'Kate G. Isaak', 'Sérgio Sousa', 
                                'Manu Stalport', 'Arnaud Turin', 'Peter Verhoeve'  ]
   # Remaining authors to add to alphabetical list (all that are not automatically added such as CST, Associate, Board, EO, MA, ESAPS):                          
-  selected_list: ['Gisbert Peter', 'Roland Ottensamer', 'Demetrio Magrin', 'Matteo Munari', 'Amador Lopez Pina', 'David Modrego', 'Pascal Guterman', 'test man','Tiziano Zingales'] 
+  selected_list: ['Demetrio Magrin', 'Matteo Munari', 'Amador Lopez Pina', 'David Modrego', 'Pascal Guterman', 'test man','Tiziano Zingales', 'Max Example'] 
   # 5 People nominated by the MAs:
   MA_nominees: ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder', 'Bernd Ulmer']
 filenames:
