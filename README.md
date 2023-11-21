@@ -1,18 +1,34 @@
-# author_list
+# author_list_notion
 
 script to automatically generate authors, insitutes, and acknowledgments lists for scientific publications.
 
 Created by Adrien Leleu and modified by Chris Broeg. ORCID update by Luisa Serrano.
 
+Version 2.0 reads not the CSV file but directly reads the Notion DB of the CHEOPS ST.
+
 # Overview
 
 The author_list tool was mainly devoloped to be used in the frame of the ESA CHEOPS mission for the Science Team publications. It automatically fulfills the CHEOPS publication policy and allows to use a homogenized author database.
 
+## Major changes in 2.0
+
+* Reads Notion DB online (requires notion-server-details.yaml obtained from CHEOPS ST)
+* In addition or instead a custom CSV file (filename configurable, default: additional_authors.csv) can be used
+* No edits are done to the python code
+* All configuration parameters and author lists are now done in the config file: author_list_config.yaml
+* file renamed to author_list_notion.py
+* dependencies for notion_client and yaml added
+
 ## Inputs
 
-### Database of people
+* internet connection required to connect to Notion DB
+* notion-server-details.yaml obtained from CHEOPS ST (plone) for access details
+* Configuration file author_list_config.yaml
 
-The script uses the CSV file containing all members of the CHEOPS Science Team and associated authors ("CHEOPS_Science_Team.csv"). It can in principle be replaced by any other list. Mandatory columns are:
+
+### Adding authors not in the DB
+
+The script uses the Notion DB data containing all members of the CHEOPS Science Team and associated authors (formerly in "CHEOPS_Science_Team.csv"). Additional authors can still be specified in a CSV file of the same format. Mandatory columns are:
 
 * "Ref name": names to use as reference when building the first and special author list
 * "ID": group id that the author belongs to used to identify in `List_of_ID_to_add`, Multiple entries must be separated by ";"
@@ -24,9 +40,9 @@ The script uses the CSV file containing all members of the CHEOPS Science Team a
 * "joined": date of joining the team; mandatory field for members of the `List_of_ID_to_add`
 * "Departed": date of leaving the team; mandatory field for members of the `List_of_ID_to_add`
 
-### Editing the author_list.py
+### Editing the author_list_config.yaml
 
-The tool must be configured by editing the python code. The following items have to be edited:
+The tool must be configured by editing the yaml file. The following items have to be edited:
 
 A number of lists must be populated using "Ref name":
 
@@ -59,7 +75,7 @@ In addition, the following configurations are possible:
 Simply run the code as
 
 ```
-> python author_list.py
+> python author_list_notion.py
 ```
 
 in the same directory as the CSV file and it will output the following files:
@@ -70,6 +86,6 @@ in the same directory as the CSV file and it will output the following files:
 * `acknowledgements.txt`: the string to put for acknowledgements. This part may need some manual editing in case of overlaps of almost similar text.
 * `acknowledgements_magic_merge.txt`: like the previous but same text starting with xxx acknowledge will be merged into one.
 
-## Updating the CSV database file
+## Updating the database 
 
-Please make sure that your information in the consortium DB is up-to-date. It will periodically be exported to CSV and pushed to github. Let C. Broeg know in case you need to make updates for your paper.
+The notion DB is kept up to date. If you have a request for modification please contact the ST chair or the mission manager.
