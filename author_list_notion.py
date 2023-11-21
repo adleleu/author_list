@@ -201,7 +201,10 @@ def get_CST_DB():
     i=1
     for page in (page_response):
         #ref column
-        Ref_Name.append([i['plain_text'] for i in page['properties']['Ref name']['title']][0])
+        info = page['properties']['Ref name']['title']
+        print(i, info, len(info))
+        if len(info)==0: continue
+        Ref_Name.append([i['plain_text'] for i in info][0])
         
         #mulit select
         ID.append([i['name'] for i in page['properties']['ID']['multi_select']])
@@ -259,6 +262,7 @@ def get_CST_DB():
             sponsor.append("")
         else:
             sponsor.append([ i['id'] for i in entry])
+        i+=1
 
     table = dict(Ref_Name=Ref_Name, First_Name = First_Name, ID=ID, Surname=Surname, Address=Address, Acknow=Acknow, Country=Country,EMAIL=EMAIL,INSTITUT=INSTITUT, 
     Departed=Departed, Joined=Joined, ORCID=ORCID, ID_1=ID_1, id=id, sponsor=sponsor)
