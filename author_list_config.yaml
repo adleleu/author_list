@@ -4,10 +4,10 @@ authors:
   # up to 4 major contributors:
   major_contributors_list: ['Attila Simon', 'Christopher Broeg', 'Göran Olofsson', 'Adrien Deline']
   # exactly 4 Science Enablers - rotating from the full list of SE:
-  science_enablers_list: ['Thomas Wilson', 'Pierre Maxted', 'Alexis Brandeker', 'Andrew Collier Cameron'] 
+  science_enablers_list: ['Pierre Maxted', 'Andrew Collier Cameron', 'Sergio Hoyer', 'Monika Lendl'] 
   # significant contributors (max 15%):
-  significant_contributors_list: ['Mathias Beck', 'Anja Bekkelien', 'Nicolas Billot', 'Andrea Bonfanti', 'Giovanni Bruno', 'Laetitia Delrez', 'Brice-Olivier Demory', 
-                               'David Futyan','Hans-Gustav Florén', 'Maximilian Günther', 'Alexis Heitzmann', 'Sergio Hoyer', 'Kate G. Isaak', 'Sérgio Sousa', 
+  significant_contributors_list: ['Anja Bekkelien', 'Nicolas Billot', 'Andrea Bonfanti', 'Giovanni Bruno', 'Laetitia Delrez', 'Brice-Olivier Demory', 
+                               'David Futyan','Hans-Gustav Florén', 'Maximilian Günther', 'Alexis Heitzmann',  'Kate G. Isaak', 'Sérgio Sousa', 
                                'Manu Stalport', 'Arnaud Turin', 'Peter Verhoeve'  ]
   # Remaining authors to add to alphabetical list (all that are not automatically added such as CST, Associate, Board, EO, MA, ESAPS):                          
   selected_list: ['Demetrio Magrin', 'Matteo Munari', 'Amador Lopez Pina', 'David Modrego', 'Pascal Guterman', 'test man','Tiziano Zingales', 'Max Example'] 

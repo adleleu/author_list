@@ -202,7 +202,6 @@ def get_CST_DB():
     for page in (page_response):
         #ref column
         info = page['properties']['Ref name']['title']
-        print(i, info, len(info))
         if len(info)==0: continue
         Ref_Name.append([i['plain_text'] for i in info][0])
         
