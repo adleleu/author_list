@@ -190,7 +190,7 @@ def get_CST_DB():
     Acknow = []
     Country = []
     EMAIL = []
-    INSTITUT = []
+    Institute = []
     Joined = []
     Departed = []
     ORCID = []
@@ -213,7 +213,7 @@ def get_CST_DB():
         Surname.append([i['plain_text'] for i in page['properties']['Surname']['rich_text']][0])
         First_Name.append([i['plain_text'] for i in page['properties']['First Name']['rich_text']][0])
 
-        entry = [i['plain_text'] for i in page['properties']['Adress']['rich_text']]
+        entry = [i['plain_text'] for i in page['properties']['Address']['rich_text']]
         if len(entry)==1: entry = entry[0]
         if len(entry)==0: entry = ""
         Address.append(entry)
@@ -223,10 +223,10 @@ def get_CST_DB():
         if len(entry)==0: entry = ""
         Acknow.append(entry)
 
-        entry = [i['plain_text'] for i in page['properties']['INSTITUT']['rich_text']]
+        entry = [i['plain_text'] for i in page['properties']['Institute']['rich_text']]
         if len(entry)==1: entry = entry[0]
         if len(entry)==0: entry = ""
-        INSTITUT.append(entry)
+        Institute.append(entry)
 
         entry = [i['plain_text'] for i in page['properties']['ORCID']['rich_text']]
         if len(entry)==1: entry = entry[0]
@@ -256,14 +256,14 @@ def get_CST_DB():
         # unique IDs
         id.append(page['id'])
 
-        entry = page['properties']['sponsor']['relation']
+        entry = page['properties']['Sponsor']['relation']
         if entry == []:
             sponsor.append("")
         else:
             sponsor.append([ i['id'] for i in entry])
         i+=1
 
-    table = dict(Ref_Name=Ref_Name, First_Name = First_Name, ID=ID, Surname=Surname, Address=Address, Acknow=Acknow, Country=Country,EMAIL=EMAIL,INSTITUT=INSTITUT, 
+    table = dict(Ref_Name=Ref_Name, First_Name = First_Name, ID=ID, Surname=Surname, Address=Address, Acknow=Acknow, Country=Country,EMAIL=EMAIL,INSTITUT=Institute, 
     Departed=Departed, Joined=Joined, ORCID=ORCID, ID_1=ID_1, id=id, sponsor=sponsor)
     db= pd.DataFrame.from_dict(table)
     db['Departed'] = pd.to_datetime(db['Departed'])
@@ -289,7 +289,8 @@ def load_author_data_from_CSV(filename='CHEOPS_Science_Team.csv'):
     for i in df_list1.index: 
         df_list1.at[i,'ID'] = df_list1.at[i,'ID'].split(',') 
 
-    df_list1.rename(columns={'Ref name': 'Ref_Name', 'Adress': 'Address', 'First Name': 'First_Name'}, inplace=True)
+    df_list1.rename(columns={'Ref name': 'Ref_Name', 'First Name': 'First_Name'}, inplace=True)
+    # df_list1.rename(columns={'Ref name': 'Ref_Name', 'Adress': 'Address', 'First Name': 'First_Name'}, inplace=True)
     # pprint(df_list1)
     return df_list1
 
