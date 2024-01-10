@@ -732,11 +732,10 @@ print("File acknowledgements.txt written.")
 # write a list of email addresses
 outF = open("emails.txt", "w")
 for l,line in zip(range(len(authors_emails)),authors_emails):
-  toprint=line.rstrip()
-  if toprint[-1]=='.':
-      outF.writelines(line.rstrip()+" ")
-  else:
-      outF.writelines(line.rstrip()+", ")
+  if isinstance(line, str):
+    toprint=line.rstrip()
+    outF.writelines(toprint+", ")
+
   #outF.write("\n")
 
 outF.close()
