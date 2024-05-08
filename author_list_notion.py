@@ -662,7 +662,7 @@ for l,line in enumerate(authors):
   line_str=line_str[:-1] + r"}" + affil_close()
 
   if (orcid[l] != 'missing' and flag_orcid):
-      line_str+=   " $^{\href{https://orcid.org/" + str(orcid[l]) + "}{\protect\includegraphics[height=0.19cm]{figures/orcid.pdf}}}$"
+      line_str+=   "\,$^{\href{https://orcid.org/" + str(orcid[l]) + "}{\protect\includegraphics[height=0.19cm]{figures/orcid.pdf}}}$"
   if l != last_author_idx:
       line_str+=   author_separator
   outF.writelines(line_str)
