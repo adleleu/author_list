@@ -329,7 +329,7 @@ def get_initials(fullname):
         else:
             initials += name[0].upper()+'. '  # append the initial
 
-  return initials[:-1]
+  return re.sub("\s+", "~",  initials[:-1])
 
 # Validate Inputs
 
@@ -508,7 +508,7 @@ for author in authors:
     if flag_initials:
         first_names.append(get_initials(df_current_author_only.iloc[0]['First_Name']))
     else:
-        first_names.append(df_current_author_only.iloc[0]['First_Name'])
+        first_names.append(re.sub("\s+","~",df_current_author_only.iloc[0]['First_Name']))
     
     author_institutes_list=df_current_author_only.iloc[0]['Address']
     #print(author_institutes_list)
@@ -641,7 +641,7 @@ orcid    = []
 
 for ref_name in authors:
     name = df_author_information_DB[df_author_information_DB['Ref_Name'] == ref_name].Surname.tolist()[0].strip()
-    surnames.append(name)
+    surnames.append(re.sub("\s+","~",name))
 
     orcid_number = df_manual_selected_plus_all_ST[df_manual_selected_plus_all_ST['Ref_Name'] == ref_name].ORCID.tolist()[0]
     #print(orcid_number)
@@ -653,7 +653,7 @@ for ref_name in authors:
 outF = open("authors.txt", "w")
 last_author_idx = len(authors) - 1
 for l,line in enumerate(authors): 
-  line_str=f"{first_names[l]} {surnames[l]}" + affil + r"{"
+  line_str=f"{first_names[l]}~{surnames[l]}" + affil + r"{"
   if len(authors_institutes[l])==0:
       line_str+=str(0) + r"}" + affil_close() + ","
   else:
