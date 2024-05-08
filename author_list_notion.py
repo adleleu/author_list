@@ -652,6 +652,7 @@ for ref_name in authors:
 # write the author list, with the institutes indexes, on a column
 outF = open("authors.txt", "w")
 last_author_idx = len(authors) - 1
+
 for l,line in enumerate(authors): 
   line_str=f"{first_names[l]}~{surnames[l]}" + affil + r"{"
   if len(authors_institutes[l])==0:
@@ -663,8 +664,13 @@ for l,line in enumerate(authors):
 
   if (orcid[l] != 'missing' and flag_orcid):
       line_str+=   "\,$^{\href{https://orcid.org/" + str(orcid[l]) + "}{\protect\includegraphics[height=0.19cm]{figures/orcid.pdf}}}$"
+
   if l != last_author_idx:
       line_str+=   author_separator
+  if l == last_author_idx - 1: 
+    #special treatment for second to last author: write , and not ,
+    if author_separator[:4]!= r"\and":
+        line_str+=   "and"
   outF.writelines(line_str)
   outF.write("\n")
 
