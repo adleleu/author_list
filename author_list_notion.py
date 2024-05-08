@@ -658,7 +658,7 @@ for l,line in enumerate(authors):
       line_str+=str(0) + r"}" + affil_close() + ","
   else:
       for k in range(len(authors_institutes[l])):
-          line_str+=r"\ref{\inst:" + str(authors_institutes[l][k]+1) + "}"  +","
+          line_str+=r"\ref{inst:" + str(authors_institutes[l][k]+1) + "}"  +","
   line_str=line_str[:-1] + r"}" + affil_close()
 
   if (orcid[l] != 'missing' and flag_orcid):
