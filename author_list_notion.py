@@ -521,7 +521,7 @@ for author in authors:
         if institute.strip() in institutes: 
             author_institutes.append(institutes.index(institute.strip()))
         #if not, create a new entry in the institute list
-        else:
+        elif institute.strip()!="":
             institutes.append(institute.strip())
             author_institutes.append(institutes.index(institute.strip()))
             
