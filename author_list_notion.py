@@ -201,17 +201,21 @@ def get_CST_DB():
     i=1
     for page in (page_response):
         #ref column
+        # print(i, end=' ')
         info = page['properties']['Ref name']['title']
         if len(info)==0: continue
         Ref_Name.append([i['plain_text'] for i in info][0])
+        # print(Ref_Name[-1])
         
         #mulit select
         ID.append([i['name'] for i in page['properties']['ID']['multi_select']])
         Country.append([i['name'] for i in page['properties']['Country']['multi_select']])
 
         #strings
-        Surname.append([i['plain_text'] for i in page['properties']['Surname']['rich_text']][0])
-        First_Name.append([i['plain_text'] for i in page['properties']['First Name']['rich_text']][0])
+        surname_list = [i['plain_text'] for i in page['properties']['Surname']['rich_text']]
+        Surname.append( surname_list[0] if surname_list else "")  # handle empty surname
+        First_Name_list = [i['plain_text'] for i in page['properties']['First Name']['rich_text']]
+        First_Name.append( First_Name_list[0] if First_Name_list else "")
 
         entry = [i['plain_text'] for i in page['properties']['Address']['rich_text']]
         if len(entry)==1: entry = entry[0]
@@ -460,7 +464,7 @@ all_authors=df_manual_selected_plus_all_ST['Ref_Name'].tolist()
 
 # sort all authors from the spreadsheet and notion in alphabetical order, thanks to P. Maxted!
 for ref_name in all_authors:
-    name = df_author_information_DB[df_author_information_DB['Ref_Name'] == ref_name].Surname.tolist()[0] 
+    name = df_author_information_DB[df_author_information_DB['Ref_Name'] == ref_name].Surname.tolist()[0]
     Family_names.append(name.split('.')[-1])
     
 df_manual_selected_plus_all_ST['ORCID'] = df_manual_selected_plus_all_ST['ORCID'].fillna('missing')
