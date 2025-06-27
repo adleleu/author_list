@@ -427,8 +427,10 @@ for author in df_author_information_DB['Ref_Name'].tolist():
         # Print a warning message and replace NaN with an empty string
         print(f"Warning: The surname of author {author} is NaN, replacing by ''\n")
 # convert empty entries in CSV to ""
-df_author_information_DB['Surname'].fillna('', inplace=True)
-df_author_information_DB['First_Name'].fillna('', inplace=True)
+# df_author_information_DB['Surname'].fillna('', inplace=True)
+# df_author_information_DB['First_Name'].fillna('', inplace=True)
+df_author_information_DB['Surname'] = df_author_information_DB['Surname'].fillna('')
+df_author_information_DB['First_Name'] = df_author_information_DB['First_Name'].fillna('')
 
 # for i,row in (df_author_information_DB.iterrows()):
 #     print(row['Ref_Name'])

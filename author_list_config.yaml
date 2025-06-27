@@ -1,4 +1,4 @@
-paper_date: 2023-07-03 # date of paper 1st circulation to select departed or newly joined ST/board/associate/EO members
+paper_date: 2024-07-03 # date of paper 1st circulation to select departed or newly joined ST/board/associate/EO members
 authors:
   lead_author: Andrea Fortier
   # up to 4 major contributors:
@@ -14,10 +14,10 @@ authors:
   # 5 People nominated by the MAs:
   MA_nominees: ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder', 'Bernd Ulmer']
 filenames:
-  Source_of_author_data: Notion and CSV # Notion or CSV or 'Notion and CSV'
+  Source_of_author_data: 'Notion and CSV' # Notion or CSV or 'Notion and CSV'
   filename_CSV: additional_authors.csv # the filename to read the CSV for CSV option
 flags:
-  affil: \inst            # or one of the following examples:  affil = '\affil';   affil = '$^';  \inst
+  affil: '\inst'            # or one of the following examples:  affil = '\affil';   affil = '$^';  \inst
   author_separator: ', '  # separator used between authors: ', ' or '\and '  (do not use "")
   flag_initials: true     # set to False if you want to print full Names, not initials
   flag_orcid: true        # set to False if you don't want the link to orcid ID in the author list
