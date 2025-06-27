@@ -126,7 +126,7 @@ import yaml, re
 #     yaml.safe_dump(author_config,file_object, allow_unicode=True, default_flow_style=False )
 
 # ID to add to all papers
-List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS']   # all of these IDs are added if paper date is within Joined and Departed date
+List_of_ID_to_add = ['CST','Associate','Board', 'EO', 'MA', 'ESAPS', 'SE']   # all of these IDs are added if paper date is within Joined and Departed date
 
 
 with open("author_list_config.yaml","r") as file_object:
