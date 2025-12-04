@@ -47,10 +47,12 @@
 import numpy as np
 import pandas as pd
 import unicodedata
+import notion_client
 from notion_client import Client 
 from notion_client.helpers import collect_paginated_api
 from pprint import pprint
 import yaml, re 
+from packaging import version
 
 # Please inform C. Broeg or D. Ehrenreich for updates to the Notion page
 
@@ -148,6 +150,16 @@ affil                           = author_config['flags']['affil']
 flag_inst_label                 = author_config['flags']['flag_inst_label']
 selected_list.extend(MA_nominees)
 
+from importlib.metadata import version
+
+notion_version = version("notion-client")
+
+if notion_version < "2.7.0":
+    # code for older versions
+    notion_client_new_api = False
+else:
+    # code for 2.7.0 or newer
+    notion_client_new_api = True
 
 def affil_close():
     if affil[0] == '$':
@@ -179,7 +191,18 @@ def get_CST_DB():
         config_dict = yaml.load(file_object, Loader=yaml.SafeLoader)
 
     client = Client(auth=config_dict['server']['notion_token_cheops']) 
-    page_response = collect_paginated_api( client.databases.query,database_id=config_dict['server']['cheops_db_id'])
+
+    # dbs = client.databases.retrieve(database_id=config_dict['server']['cheops_db_id'])
+   
+
+
+    if notion_client_new_api:
+        page_response = collect_paginated_api( client.data_sources.query,data_source_id=config_dict['server']['stm_source_id'])
+    else:
+        page_response = collect_paginated_api( client.databases.query,database_id=config_dict['server']['cheops_db_id'])
+
+    
+
     print("Data retrieved from Notion.\n")
 
     Ref_Name = []
@@ -287,8 +310,10 @@ def load_author_data_from_CSV(filename='CHEOPS_Science_Team.csv'):
 
     df_list1 = pd.read_csv(filename, parse_dates=dates)
 
-    df_list1['ID'].fillna("", inplace=True)  #allow rows without ID
-    df_list1['Acknow'].fillna("", inplace=True)  #allow rows without ID
+    # df_list1['ID'].fillna("", inplace=True)  #allow rows without ID
+    # df_list1['Acknow'].fillna("", inplace=True)  #allow rows without ID
+    df_list1['ID'] = df_list1['ID'].fillna("")  #allow rows without ID
+    df_list1['Acknow'] = df_list1['Acknow'].fillna("")  #allow rows without ID
 
     for i in df_list1.index: 
         df_list1.at[i,'ID'] = df_list1.at[i,'ID'].split(',') 
