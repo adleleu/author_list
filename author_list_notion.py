@@ -574,7 +574,6 @@ for author in authors:
                 # print(author)
                 author_ack[ack_stripped].append(author) 
 
-    
 
     # List of emails
     author_email=df_current_author_only.iloc[0]['EMAIL']
@@ -597,36 +596,45 @@ def author_name_to_initials(authors):
 def magic_merge_acknowledgements(author_ack):
     "automagically find similar acknowledgement strings and group authors TA and VV acknowledge..."
 
-        # pick out all that contain acknowledge
-    author_ack2 = {}
-    author_ack_no_duplicates = {}
-    for ack, author in author_ack.items():
+    # pick out all that contain acknowledge
+    author_ack2 = {} # collect all acknowledgements tails here that contain the string "acknowledge"
+    author_ack_no_duplicates = {} # collect all acknowledgements here that do not contain the string "acknowledge" 
+    for ack, authors in author_ack.items():
         if "acknowledge" in ack.lower():
             idx = ack.lower().index("acknowledge")
             ack_tail = ack[idx+12:].strip()
             if ack_tail in author_ack2:
                 # print(author,author_ack2[ack_tail])
-                author_ack2[ack_tail].extend(author) 
+                author_ack2[ack_tail].extend(authors) 
                 # print(author,author_ack2[ack_tail])
             else:   
-                author_ack2[ack_tail] = author.copy()
-                author_ack_no_duplicates[ack] = author.copy()
+                author_ack2[ack_tail] = authors.copy()
+                author_ack_no_duplicates[ack] = authors.copy()
                 # print(author)
         else:
-            author_ack_no_duplicates[ack] = author.copy()
+            author_ack_no_duplicates[ack] = authors.copy()
+
 
         
-    # delete single entries
-    dict3={}
-    for key, author in author_ack2.items():
-        if len(author) > 1:
-            dict3[key]=author
+    # # delete single entries
+    # dict3={} # contains all acknowledgements having 2 or more authors connected to them
+    # dict3_single={} # contains all acknowledgements having 1 author connected to them
+    # for key, author in author_ack2.items():
+    #     if len(author) > 1:
+    #         dict3[key]=author
+
+
+
+
     # reconstruct full string with all authors
-    dict4={}
-    for key, authors in dict3.items():
+    dict4={} # contains all acknowledgements having the word acknowledge with reconstructed author initials
+    for key, authors in author_ack2.items():
         authors_initials = (author_name_to_initials(authors))
         text = key
-        if len(authors_initials) == 2:
+        if len(authors_initials) == 1:
+            prefix = authors_initials[0]  + " acknowledges "
+
+        elif len(authors_initials) == 2:
             prefix = authors_initials[0] + " and " + authors_initials[1] + " acknowledge "
         else:
             prefix = ""
