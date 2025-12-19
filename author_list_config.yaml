@@ -8,13 +8,13 @@ authors:
   # significant contributors (max 15%):
   significant_contributors_list: ['Anja Bekkelien', 'Nicolas Billot', 'Andrea Bonfanti', 'Giovanni Bruno', 'Laetitia Delrez', 'Brice-Olivier Demory', 
                                'David Futyan','Hans-Gustav Florén', 'Maximilian Günther', 'Alexis Heitzmann',  'Kate G. Isaak', 'Sérgio Sousa', 
-                               'Manu Stalport', 'Arnaud Turin', 'Peter Verhoeve'  ]
+                               'Manu Stalport', 'Arnaud Turin', 'Peter Verhoeve', 'Gyula Szabó'] 
   # Remaining authors to add to alphabetical list (all that are not automatically added such as CST, Associate, Board, EO, MA, ESAPS):                          
-  selected_list: ['Demetrio Magrin', 'Matteo Munari', 'Pascal Guterman', 'test man','Tiziano Zingales', 'Max Example'] 
+  selected_list: ['Demetrio Magrin', 'Matteo Munari', 'Pascal Guterman', 'Tiziano Zingales'] 
   # 5 People nominated by the MAs:
   MA_nominees: ['Federico Biondi', 'Francesco Ratti', 'Francesco Verrecchia', 'Maximilian Buder', 'Bernd Ulmer']
 filenames:
-  Source_of_author_data: 'Notion and CSV' # Notion or CSV or 'Notion and CSV'
+  Source_of_author_data: 'Notion' # Notion or CSV or 'Notion and CSV'
   filename_CSV: additional_authors.csv # the filename to read the CSV for CSV option
 flags:
   affil: '\inst'            # or one of the following examples:  affil = '\affil';   affil = '$^';  \inst

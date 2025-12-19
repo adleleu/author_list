@@ -651,19 +651,25 @@ def magic_merge_acknowledgements(author_ack):
                 return True, ack
         return author_in_dict, None
 
-    # now go through author_ack and check if any names need updates
-    result_dict = {}
-    for ack, author in author_ack_no_duplicates.items():
-        # if len(author) == 1:
-            # if author in any value of dict4, replace ack with dict4 version
-        if author_in_dict(author[0], dict4)[0]:
-            tmp, new_ack = author_in_dict(author[0], dict4)
-            result_dict[new_ack] = author_ack_no_duplicates[ack]
-            # print("new ack for ", author[0], new_ack)
-        else:
-            result_dict[ack] = author_ack_no_duplicates[ack]
-            # print("keeping entry", author, ack)
-    return result_dict,author_ack_no_duplicates
+    # # now go through author_ack and check if any names need updates
+    # result_dict = {}
+    # for ack, author in author_ack_no_duplicates.items():
+    #     # if len(author) == 1:
+    #         # if author in any value of dict4, replace ack with dict4 version
+    #     if author_in_dict(author[0], dict4)[0]:
+    #         tmp, new_ack = author_in_dict(author[0], dict4)
+    #         result_dict[new_ack] = author_ack_no_duplicates[ack]
+    #         # print("new ack for ", author[0], new_ack)
+    #     else:
+    #         result_dict[ack] = author_ack_no_duplicates[ack]
+    #         # print("keeping entry", author, ack)
+    # return result_dict,author_ack_no_duplicates
+
+    # now list all acknowledgements without and with the word acknowledge
+    result_dict = {**dict4, **author_ack_no_duplicates}
+    return result_dict, author_ack_no_duplicates
+    
+
 
 res,author_ack_no_duplicates = (magic_merge_acknowledgements(author_ack=author_ack))
 # res = author_ack
