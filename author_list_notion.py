@@ -427,10 +427,10 @@ else:
 string_columns = df_author_information_DB.select_dtypes(include=['object'])
 
 # Apply the function to the string columns
-df_with_non_printable = string_columns.applymap(find_non_printable_characters)
+df_with_non_printable = string_columns.map(find_non_printable_characters)
 
 
-rows_with_non_printable = df_with_non_printable.applymap(lambda x: len(x) > 0)
+rows_with_non_printable = df_with_non_printable.map(lambda x: len(x) > 0)
 
 df_containing_non_printable = df_author_information_DB[rows_with_non_printable.any(axis=1)]
 if len(df_containing_non_printable):
